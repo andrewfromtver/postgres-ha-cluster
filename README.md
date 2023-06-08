@@ -20,6 +20,8 @@
 * `MASTER_IP = "192.168.56.101"`
 * `SLAVE_1_IP = "192.168.56.102"`
 * `SLAVE_2_IP = "192.168.56.103"`
+* `POSTGRES_PASSWORD = "qwerty12"`
+* `ETCD_CLUSTER_TOKEN = "etcdtesttoken"`
 
 # Simple database stress test
 
