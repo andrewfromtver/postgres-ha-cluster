@@ -32,6 +32,6 @@
 * `DB_USER=postgres`
 * `DB_PASSWORD=qwerty12`
 * `DB_NAME=postgres`
-* `DB_HOST=192.168.56.100
+* `DB_HOST=192.168.56.100`
 * `DB_PORT=5432`
 * `COMMAND_INTERVAL=100`
