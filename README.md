@@ -3,6 +3,7 @@
 *Third-party software*
 * Oracle VM VirtualBox
 * Vagrant by HashiCorp
+* Node.js (only for DB stress tests)
 
 # Deployment
 
@@ -37,3 +38,11 @@
 * `DB_HOST=192.168.56.100`
 * `DB_PORT=5432`
 * `COMMAND_INTERVAL=100`
+
+# Screenshots
+
+![Screenshot_01](docs/Screenshot_1.png)
+
+![Screenshot_02](docs/Screenshot_2.png)
+
+![Screenshot_03](docs/Screenshot_3.png)
