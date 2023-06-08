@@ -1,0 +1,4 @@
+.vagrant
+db_test_js/node_modules
+db_test_js/.env
+*.log
