@@ -43,7 +43,7 @@ Vagrant.configure(2) do |config|
       }
       pgnode.trigger.after :up do
         if(i <= $count) then
-          pgnode.vm.provision "shell", inline: <<-SHELL
+          pgnode.vm.provision "shell", run: 'always', inline: <<-SHELL
             systemctl enable etcd &
             systemctl start etcd &
             systemctl enable patroni &
