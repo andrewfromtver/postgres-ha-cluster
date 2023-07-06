@@ -108,13 +108,6 @@ bootstrap:
     - host replication postgres $SLAVE_2_IP/0 md5
     - host all all $HA_PROXY_IP/0 md5
 
-    users:
-        admin:
-            password: admin
-            options:
-                - createrole
-                - createdb
-
 postgresql:
     listen: $CURRENT_NODE_IP:5432
     connect_address: $CURRENT_NODE_IP:5432
@@ -129,11 +122,6 @@ postgresql:
             username: postgres
             password: $POSTGRES_PASSWORD
     create_replica_methods:
-        basebackup:
-            checkpoint: 'fast'
-    parameters:
-        unix_socket_directories: '.'
-
         basebackup:
             checkpoint: 'fast'
     parameters:
