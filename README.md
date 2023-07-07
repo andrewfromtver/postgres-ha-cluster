@@ -6,7 +6,6 @@
 
 # Deployment
 * Start deployment with `vagrant up` command
-* If you would like to save deployment log use `vagrant up 2>&1 | tee cluster_deploy_`date +%d-%m-%Y"_"%H_%M_%S`.log` command
 
 # Vagrant file params
 * `HA_PROXY_RAM = 1024`
