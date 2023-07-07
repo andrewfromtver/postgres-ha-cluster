@@ -6,6 +6,7 @@ deploy-code-job:
   tags:
     - host
   script:
+    - vagrant destroy -f
     - vagrant up
   after_script:
     - >
