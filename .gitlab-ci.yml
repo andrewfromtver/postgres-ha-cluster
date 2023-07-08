@@ -2,16 +2,16 @@ variables:
     GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_PROJECT_NAME'
 
 stages:
-  - cashe
+  - cache
   - deploy
 
-cashe-job:
-  stage: cashe
+cache-job:
+  stage: cache
   tags:
     - vagrant
   script:
     - mkdir -p .vagrant
-  cashe:
+  cache:
     paths:
       - .vagrant
 
