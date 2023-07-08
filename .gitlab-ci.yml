@@ -2,7 +2,19 @@ variables:
     GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_PROJECT_NAME'
 
 stages:
+  - cache
   - deploy
+
+cache-job:
+  stage: cache
+  tags:
+    - vagrant
+  cache:
+    paths:
+      - .vagrant
+  script:
+    - mkdir -p .vagrant
+    - find .vagrant -type f -printf "%T@ %p\n" | sort -nr | cut -d\  -f2-
 
 deploy-job:
   stage: deploy
@@ -14,8 +26,6 @@ deploy-job:
   before_script:
     - curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=%20🛠%20%5B$CI_PROJECT_NAME%5D%20Deploy%20job%20started"
   script:
-    - mkdir -p .vagrant
-    - find .vagrant -type f -printf "%T@ %p\n" | sort -nr | cut -d\  -f2-
     - vagrant destroy -f
     - vagrant up 2>&1 | tee deploy.log
   after_script:
