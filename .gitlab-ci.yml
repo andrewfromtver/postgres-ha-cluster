@@ -9,16 +9,20 @@ cache-job:
   stage: cache
   tags:
     - vagrant
-  script:
-    - mkdir -p .vagrant
   cache:
     paths:
       - .vagrant
+  script:
+    - mkdir -p .vagrant
+    - find .vagrant -type f -printf "%T@ %p\n" | sort -nr | cut -d\  -f2-
 
 deploy-job:
   stage: deploy
   tags:
     - vagrant
+  cache:
+    paths:
+      - .vagrant
   before_script:
     - curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=%20🛠%20%5B$CI_PROJECT_NAME%5D%20Deploy%20job%20started"
   script:
