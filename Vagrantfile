@@ -2,11 +2,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-HA_PROXY_RAM = 1024
-HA_PROXY_CPU = 1
+HA_PROXY_RAM = 2048
+HA_PROXY_CPU = 2
 
-DB_NODE_RAM = 2048
-DB_NODE_CPU = 2
+DB_NODE_RAM = 4096
+DB_NODE_CPU = 4
 
 VM_BOX = "generic/debian10"
 
