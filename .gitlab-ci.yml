@@ -11,6 +11,8 @@ deploy-code-job:
   stage: deploy
   tags:
     - host
+  before_script:
+    - curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=%20🛠%20%5B$CI_PROJECT_NAME%5D%20Deploy%20job%20started"
   script:
     - vagrant destroy -f
     - vagrant up
