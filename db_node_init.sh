@@ -6,12 +6,12 @@ apt-get -y install gnupg2
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
 apt-get update
-apt-get -y install postgresql-13 postgresql-client-13 python3-pip python3-dev libpq-dev etcd
+apt-get -y install postgresql-14 postgresql-client-14 python3-pip python3-dev libpq-dev etcd
 pip3 install psycopg2 patroni[etcd]
 
 # setup postgres
-pg_ctlcluster 13 main start
-sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/13/main/postgresql.conf
+pg_ctlcluster 14 main start
+sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/14/main/postgresql.conf
 su postgres << EOF
   psql -c "alter user postgres with password '$POSTGRES_PASSWORD';"
 EOF
@@ -112,7 +112,7 @@ postgresql:
     listen: $CURRENT_NODE_IP:5432
     connect_address: $CURRENT_NODE_IP:5432
     data_dir: /data/patroni
-    bin_dir:  /usr/lib/postgresql/13/bin
+    bin_dir:  /usr/lib/postgresql/14/bin
     pgpass: /tmp/pgpass
     authentication:
         replication:
