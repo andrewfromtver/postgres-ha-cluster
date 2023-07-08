@@ -5,7 +5,7 @@ stages:
   - deploy
 
 deploy-code-job:
-  cache:
+  artifacts:
     paths:
       - .vagrant
   stage: deploy
