@@ -8,10 +8,10 @@
 * Start deployment with `vagrant up` command
 
 # Vagrant file params
-* `HA_PROXY_RAM = 1024`
-* `HA_PROXY_CPU = 1`
-* `DB_NODE_RAM = 2048`
-* `DB_NODE_CPU = 2`
+* `HA_PROXY_RAM = 2048`
+* `HA_PROXY_CPU = 2`
+* `DB_NODE_RAM = 4096`
+* `DB_NODE_CPU = 4`
 * `VM_BOX = "generic/debian10"` (tested only on debian10)
 * `HA_PROXY_IP = "192.168.56.100"`
 * `MASTER_IP = "192.168.56.101"`
