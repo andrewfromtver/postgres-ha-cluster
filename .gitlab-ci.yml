@@ -5,6 +5,9 @@ stages:
   - deploy
 
 deploy-code-job:
+  cache:
+    paths:
+      - .vagrant
   stage: deploy
   tags:
     - host
