@@ -15,9 +15,9 @@ defaults
   mode tcp
   retries 2
   timeout client 30m
-  timeout connect 4s
+  timeout connect 1s
   timeout server 30m
-  timeout check 5s
+  timeout check 2s
 
 listen stats
   mode http

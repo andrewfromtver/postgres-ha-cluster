@@ -2,11 +2,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-HA_PROXY_RAM = 2048
-HA_PROXY_CPU = 2
+HA_PROXY_RAM = 1024
+HA_PROXY_CPU = 1
 
-DB_NODE_RAM = 4096
-DB_NODE_CPU = 4
+DB_NODE_RAM = 2048
+DB_NODE_CPU = 2
 
 VM_BOX = "generic/debian10"
 
@@ -53,6 +53,7 @@ Vagrant.configure(2) do |config|
         if(i == $count) then
           pgnode.vm.provision "shell", run: 'always', inline: <<-SHELL
             # check cluster status
+            sleep 5
             etcdctl member list
             patronictl -c /etc/patroni.yml list
           SHELL
