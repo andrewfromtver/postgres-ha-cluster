@@ -2,10 +2,11 @@ variables:
     GIT_CLONE_PATH: '$CI_BUILDS_DIR/$CI_PROJECT_NAME'
 
 stages:
-  - deploy
+  - deploy_haproxy
+  - deploy_pg_cluster
 
 deploy-job:
-  stage: deploy
+  stage: deploy_haprohy
   tags:
     - vagrant
   cache:
@@ -13,13 +14,31 @@ deploy-job:
       - .vagrant
   before_script:
     - curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=%20🛠%20%5B$CI_PROJECT_NAME%5D%20Deploy%20job%20started"
-  script:
     - vagrant destroy -f
-    - vagrant up 2>&1 | tee deploy.log
+  script:
+    - vagrant up haproxy 2>&1 | tee haproxy_deploy.log
   after_script:
     - >
       if [ $CI_JOB_STATUS == 'success' ]; then
-        curl -F document=@"deploy.log" https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument?chat_id=$TELEGRAM_CHAT_ID
+        curl -F document=@"haproxy_deploy.log" https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument?chat_id=$TELEGRAM_CHAT_ID
+      else
+        vagrant destroy -f
+        curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=%20❌%20%5B$CI_PROJECT_NAME%5D%20Deploy%20job%20failed%20$CI_PIPELINE_URL"
+      fi
+
+deploy-job:
+  stage: deploy_pg_cluster
+  tags:
+    - vagrant
+  cache:
+    paths:
+      - .vagrant
+  script:
+    - vagrant up pgnode1 pgnode2 pgnode3 2>&1 | tee pg_cluster_deploy.log
+  after_script:
+    - >
+      if [ $CI_JOB_STATUS == 'success' ]; then
+        curl -F document=@"pg_cluster_deploy.log" https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument?chat_id=$TELEGRAM_CHAT_ID
         curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=%20🚀%20%5B$CI_PROJECT_NAME%5D%20Deploy%20job%20completed%20$PROJECT_URL"
       else
         vagrant destroy -f
