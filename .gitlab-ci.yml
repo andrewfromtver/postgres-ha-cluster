@@ -5,7 +5,7 @@ stages:
   - deploy_haproxy
   - deploy_pg_cluster
 
-deploy-job:
+deploy_haprohy-job:
   stage: deploy_haprohy
   tags:
     - vagrant
@@ -26,7 +26,7 @@ deploy-job:
         curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=%20❌%20%5B$CI_PROJECT_NAME%5D%20Deploy%20job%20failed%20$CI_PIPELINE_URL"
       fi
 
-deploy-job:
+deploy_pg_cluster-job:
   stage: deploy_pg_cluster
   tags:
     - vagrant
