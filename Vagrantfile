@@ -11,9 +11,9 @@ DB_NODE_CPU = 4
 VM_BOX = "generic/debian10"
 
 HA_PROXY_IP = "192.168.56.100"
-MASTER_IP = "192.168.56.101"
-SLAVE_1_IP = "192.168.56.102"
-SLAVE_2_IP = "192.168.56.103"
+NODE_1_IP = "192.168.56.101"
+NODE_2_IP = "192.168.56.102"
+NODE_3_IP = "192.168.56.103"
 
 POSTGRES_MAJOR_VERSION = 15
 POSTGRES_PASSWORD = "qwerty12"
@@ -21,7 +21,7 @@ ETCD_CLUSTER_TOKEN = "etcdtesttoken"
 
 Vagrant.configure(2) do |config|
   $count = 3
-  IP_ARRAY = [MASTER_IP, SLAVE_1_IP, SLAVE_2_IP]
+  IP_ARRAY = [NODE_1_IP, NODE_2_IP, NODE_3_IP]
   (1..$count).each do |i|
     config.vm.define "pgnode#{i}" do |pgnode|
       pgnode.vm.box = VM_BOX
@@ -38,17 +38,15 @@ Vagrant.configure(2) do |config|
         "POSTGRES_MAJOR_VERSION" => POSTGRES_MAJOR_VERSION,
         "POSTGRES_PASSWORD" => POSTGRES_PASSWORD,
         "HA_PROXY_IP" => HA_PROXY_IP,
-        "MASTER_IP" => MASTER_IP,
-        "SLAVE_1_IP" => SLAVE_1_IP,
-        "SLAVE_2_IP" => SLAVE_2_IP,
+        "NODE_1_IP" => NODE_1_IP,
+        "NODE_2_IP" => NODE_2_IP,
+        "NODE_3_IP" => NODE_3_IP,
         "CURRENT_NODE_IP" => IP_ARRAY[i - 1]
       }
       pgnode.trigger.after :up do
         if(i <= $count) then
           pgnode.vm.provision "shell", run: 'always', inline: <<-SHELL
-            systemctl enable etcd &
             systemctl start etcd &
-            systemctl enable patroni &
             systemctl start patroni &
           SHELL
         end
@@ -72,9 +70,9 @@ Vagrant.configure(2) do |config|
     end
     haproxy.vm.network "private_network", ip: HA_PROXY_IP
     haproxy.vm.provision "shell", path: "ha_proxy_init.sh", env: {
-      "MASTER_IP" => MASTER_IP,
-      "SLAVE_1_IP" => SLAVE_1_IP,
-      "SLAVE_2_IP" => SLAVE_2_IP
+      "NODE_1_IP" => NODE_1_IP,
+      "NODE_2_IP" => NODE_2_IP,
+      "NODE_3_IP" => NODE_3_IP
     }
   end
 end

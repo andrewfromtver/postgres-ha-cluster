@@ -37,7 +37,7 @@ ExecStart=/usr/bin/etcd \\
  --listen-client-urls http://${CURRENT_NODE_IP}:2379,http://127.0.0.1:2379 \\
  --advertise-client-urls http://${CURRENT_NODE_IP}:2379 \\
  --initial-cluster-token etcd-cluster-1 \\
- --initial-cluster pgnode1=http://${MASTER_IP}:2380,pgnode2=http://${SLAVE_1_IP}:2380,pgnode3=http://${SLAVE_2_IP}:2380 \\
+ --initial-cluster pgnode1=http://${NODE_1_IP}:2380,pgnode2=http://${NODE_2_IP}:2380,pgnode3=http://${NODE_3_IP}:2380 \\
  --initial-cluster-state new \\
  --heartbeat-interval 1000 \\
  --election-timeout 5000
@@ -78,7 +78,7 @@ restapi:
     connect_address: $CURRENT_NODE_IP:8008
 
 etcd:
-    hosts: [\"$MASTER_IP:2379\", \"$SLAVE_1_IP:2379\", \"$SLAVE_2_IP:2379\"]
+    hosts: [\"$NODE_1_IP:2379\", \"$NODE_2_IP:2379\", \"$NODE_3_IP:2379\"]
 
 bootstrap:
     dcs:
@@ -103,9 +103,9 @@ bootstrap:
     - locale: en_US.UTF8
     pg_hba:
     - host replication postgres 127.0.0.1/32 md5
-    - host replication postgres $MASTER_IP/0 md5
-    - host replication postgres $SLAVE_1_IP/0 md5
-    - host replication postgres $SLAVE_2_IP/0 md5
+    - host replication postgres $NODE_1_IP/0 md5
+    - host replication postgres $NODE_2_IP/0 md5
+    - host replication postgres $NODE_3_IP/0 md5
     - host all all $HA_PROXY_IP/0 md5
 
 postgresql:
@@ -140,3 +140,7 @@ chmod 700 /data/patroni
 
 # realod systemd
 systemctl daemon-reload
+
+# stop and disable postgresql service
+systemctl stop postgresql
+systemctl disable postgresql

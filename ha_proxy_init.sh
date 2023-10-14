@@ -1,8 +1,11 @@
 #!/bin/bash
 
 export DEBIAN_FRONTEND=noninteractive
+
+# install haproxy
 apt-get -y install haproxy
 
+# setup haproxy
 echo "\
 global
   maxconn 100
@@ -27,9 +30,10 @@ listen postgres
   option httpchk
   http-check expect status 200
   default-server inter 3s fall 3 rise 2 on-marked-down shutdown-sessions
-  server pgnode1 $MASTER_IP:5432 maxconn 100 check port 8008
-  server pgnode2 $SLAVE_1_IP:5432 maxconn 100 check port 8008
-  server pgnode3 $SLAVE_2_IP:5432 maxconn 100 check port 8008
+  server pgnode1 $NODE_1_IP:5432 maxconn 100 check port 8008
+  server pgnode2 $NODE_2_IP:5432 maxconn 100 check port 8008
+  server pgnode3 $NODE_3_IP:5432 maxconn 100 check port 8008
 " > /etc/haproxy/haproxy.cfg
 
+# restart haproxy service
 systemctl restart haproxy
