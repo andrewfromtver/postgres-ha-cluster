@@ -44,12 +44,6 @@ Vagrant.configure(2) do |config|
         "CURRENT_NODE_IP" => IP_ARRAY[i - 1]
       }
       pgnode.trigger.after :up do
-        if(i <= $count) then
-          pgnode.vm.provision "shell", run: 'always', inline: <<-SHELL
-            systemctl start etcd &
-            systemctl start patroni &
-          SHELL
-        end
         if(i == $count) then
           pgnode.vm.provision "shell", run: 'always', inline: <<-SHELL
             # check cluster status
