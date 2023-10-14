@@ -6,7 +6,7 @@ stages:
   - deploy_pg_cluster
 
 deploy_haprohy-job:
-  stage: deploy_haprohy
+  stage: deploy_haproxy
   tags:
     - vagrant
   cache:
