@@ -49,7 +49,7 @@ Vagrant.configure(2) do |config|
             # check cluster status
             sleep 5
             etcdctl member list
-            patronictl -c /etc/patroni.yml reinit pgsql
+            patronictl -c /etc/patroni.yml list
           SHELL
         end
       end
