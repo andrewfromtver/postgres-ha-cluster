@@ -8,15 +8,15 @@
 * Start deployment with `vagrant up` command
 
 # Vagrant file params
-* `HA_PROXY_RAM = 2048`
-* `HA_PROXY_CPU = 2`
-* `DB_NODE_RAM = 4096`
-* `DB_NODE_CPU = 4`
+* `HA_PROXY_RAM = 1024`
+* `HA_PROXY_CPU = 1`
+* `DB_NODE_RAM = 2048`
+* `DB_NODE_CPU = 2`
 * `VM_BOX = "generic/debian10"` (tested only on debian10)
 * `HA_PROXY_IP = "192.168.56.100"`
-* `MASTER_IP = "192.168.56.101"`
-* `SLAVE_1_IP = "192.168.56.102"`
-* `SLAVE_2_IP = "192.168.56.103"`
+* `NODE_1_IP = "192.168.56.101"`
+* `NODE_2_IP = "192.168.56.102"`
+* `NODE_3_IP = "192.168.56.103"`
 * `POSTGRES_MAJOR_VERSION = 15`
 * `POSTGRES_PASSWORD = "qwerty12"`
 * `ETCD_CLUSTER_TOKEN = "etcdtesttoken"`
