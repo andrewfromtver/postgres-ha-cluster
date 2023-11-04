@@ -140,13 +140,3 @@ chmod 700 /data/patroni
 
 # realod systemd
 systemctl daemon-reload
-
-# stop and disable postgresql service
-systemctl stop postgresql
-systemctl disable postgresql
-
-# start and enable etcd and patroni
-systemctl start etcd &
-systemctl enable etcd &
-systemctl start patroni &
-systemctl enable patroni &

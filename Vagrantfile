@@ -44,10 +44,16 @@ Vagrant.configure(2) do |config|
         "CURRENT_NODE_IP" => IP_ARRAY[i - 1]
       }
       pgnode.trigger.after :up do
+        pgnode.vm.provision "shell", run: 'always', inline: <<-SHELL
+          # check cluster status
+          systemctl stop postgresql
+          systemctl start etcd &
+          systemctl start patroni &
+        SHELL
         if(i == $count) then
           pgnode.vm.provision "shell", run: 'always', inline: <<-SHELL
+            sleep 3
             # check cluster status
-            sleep 5
             etcdctl member list
             patronictl -c /etc/patroni.yml list
           SHELL
